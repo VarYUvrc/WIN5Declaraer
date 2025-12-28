@@ -935,21 +935,41 @@
 
     // ---------- 抽選 ----------
     drawBtn.addEventListener("click", () => {
-      const k = clampInt(parseInt(ticketsPerDrawEl.value, 10), 1, 50);
-      state.settings.ticketsPerDraw = k;
+      const kRaw = clampInt(parseInt(ticketsPerDrawEl.value, 10), 1, 50);
 
       const now = new Date();
       const tsISO = now.toISOString();
 
+      const Ns = state.settings.Ns.map(v => clampInt(v ?? 10, 1, 18));
+      const maxComb = Ns.reduce((acc, v) => acc * v, 1);
+      const k = Math.min(kRaw, maxComb);
+      state.settings.ticketsPerDraw = k;
+
+      if (kRaw > maxComb) {
+        alert(`設定上限が小さいため、抽選数は最大 ${maxComb} までになります。`);
+      }
+
       const tickets = [];
-      for (let t = 0; t < k; t++) {
+      const seen = new Set();
+      const maxAttempts = Math.max(200, k * 40);
+      let attempts = 0;
+
+      while (tickets.length < k && attempts < maxAttempts) {
+        attempts++;
         const ranks = [];
         for (let r = 0; r < 5; r++) {
-          const N = clampInt(state.settings.Ns[r] ?? 10, 1, 18);
-          const rank = weightedSampleRank(N, state.settings.distType, state.settings.distParam);
+          const rank = weightedSampleRank(Ns[r], state.settings.distType, state.settings.distParam);
           ranks.push(rank);
         }
+        const key = ranks.join("-");
+        if (seen.has(key)) continue;
+        seen.add(key);
         tickets.push({ ranks, tsISO });
+      }
+
+      if (tickets.length < k) {
+        const remain = k - tickets.length;
+        alert(`重複を避けた結果、${remain}件は作成できませんでした。`);
       }
 
       const sortedTickets = sortTicketsByRanks(tickets);
