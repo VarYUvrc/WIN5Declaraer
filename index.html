@@ -541,13 +541,17 @@
     .weightsBody{padding:0 18px 18px}
     .weightsGrid{
       display:grid;
-      grid-template-columns: 200px 1fr 80px;
+      grid-template-columns: 1fr;
       gap:10px;
       align-items:center;
     }
-    @media (max-width: 720px){
-      .weightsGrid{grid-template-columns: 1fr}
+    .weightsRow{
+      display:grid;
+      grid-template-columns: 1fr 80px;
+      gap:10px;
+      align-items:center;
     }
+    .weightsRow .field{min-width:0;}
     .pill{
       display:inline-block;
       padding:4px 10px;
@@ -727,7 +731,7 @@
           <button id="clearChecksBtn" class="btn checkRect" title="購入済みチェックをすべて外します">全解除</button>
         </div>
         <div class="logNote">
-          数字は人気順です。馬券購入時は各レースの人気順を参照して、対応する馬番を選択してください。データは端末内に記録されています。
+          数字は人気順です。馬券購入時は各レースの人気順を参照して、対応する馬番を選択してください。データは端末内に記録されます。
         </div>
       </div>
     </section>
@@ -736,19 +740,25 @@
       <summary class="weightsSummary">抽選の重み設定 <span class="pill">おすすめ設定</span></summary>
       <div class="weightsBody">
         <div class="weightsGrid">
-        <div class="field" style="min-width:200px">
-            <label>計算式</label>
-            <div class="formulaBox">weight(i) = 1 / i^s</div>
+          <div class="weightsRow">
+            <div class="field">
+              <label id="distParamLabel" for="distParam">偏り（s）</label>
+              <input id="distParam" type="range" />
+            </div>
+
+            <div class="field" style="min-width:80px">
+              <label>値</label>
+              <div id="distParamValue" class="paramValue"></div>
+            </div>
           </div>
 
           <div class="field">
-            <label id="distParamLabel" for="distParam">偏り（s）</label>
-            <input id="distParam" type="range" />
-          </div>
-
-        <div class="field" style="min-width:80px">
-            <label>値</label>
-            <div id="distParamValue" class="paramValue"></div>
+            <label>計算式</label>
+            <div class="formulaBox">
+              <div>weight(i) = 1 / i^s</div>
+              <div>p(i) = weight(i) / Σ<sub>k</sub> weight(k)</div>
+              <div>draw i by p(i)</div>
+            </div>
           </div>
         </div>
 
