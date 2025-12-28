@@ -15,9 +15,11 @@
       --border:#d7e5db;
       --accent:#1f9d55;
       --accent-strong:#14823f;
+      --warm:#f59e0b;
+      --field-bg:#eef5f0;
       --danger:#e11d48;
       --ok:#16a34a;
-      --shadow: 0 18px 40px rgba(15,70,35,.10);
+      --shadow: 0 18px 40px rgba(15,70,35,.10), 0 6px 18px rgba(245,158,11,.10);
       --radius: 22px;
       --pill: 999px;
     }
@@ -112,7 +114,7 @@
     input[type="number"], select{
       appearance:none;
       border:1px solid rgba(215,229,219,.95);
-      background: rgba(255,255,255,.9);
+      background: var(--field-bg);
       color:var(--text);
       border-radius: var(--pill);
       padding:12px 14px;
@@ -132,12 +134,12 @@
       color: white;
       background: linear-gradient(180deg, rgba(31,157,85,1), rgba(20,130,63,1));
       cursor:pointer;
-      box-shadow: 0 16px 34px rgba(31,157,85,.22);
+      box-shadow: 0 16px 34px rgba(31,157,85,.22), 0 6px 16px rgba(245,158,11,.18);
       min-width: 160px;
     }
     .btn:active{transform: translateY(1px)}
     .btn.secondary{
-      background: rgba(255,255,255,.85);
+      background: var(--field-bg);
       border:1px solid rgba(215,229,219,.95);
       color: var(--text);
       box-shadow:none;
@@ -198,7 +200,7 @@
       border:none;
       padding:0;
       display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+      grid-template-columns: 1fr;
       gap:10px;
       align-content:start;
       min-height: 110px;
@@ -224,7 +226,7 @@
     }
     .ticketCard{
       background: #ffffff;
-      border:1px solid rgba(215,229,219,.95);
+      border:1px solid rgba(215,229,219,.9);
       border-radius: 18px;
       box-shadow: 0 10px 20px rgba(22,101,52,.08);
       font-size:28px;
@@ -267,14 +269,6 @@
       font-size:13px;
       color: var(--muted);
     }
-    table{
-      width:100%;
-      border-collapse: collapse;
-      overflow:hidden;
-      border-radius: 14px;
-      border:1px solid rgba(215,229,219,.95);
-      background: #fff;
-    }
     thead th{
       text-align:left;
       font-size:12px;
@@ -309,13 +303,14 @@
       display:flex;
       align-items:center;
       gap:6px;
-      padding:5px 9px;
+      padding:5px 8px;
       border-radius:12px;
-      border:1px solid rgba(215,229,219,.9);
-      background: rgba(242,248,243,.95);
+      border:1px solid rgba(215,229,219,.85);
+      background: #ffffff;
       font-weight:700;
       color:#134e2a;
       font-size:12px;
+      flex:1 1 76px;
     }
     .comboCardLabel{
       font-size:10px;
@@ -325,6 +320,9 @@
     .comboCardValue{
       font-size:13px;
       color:#134e2a;
+      min-width:20px;
+      text-align:center;
+      flex:1;
     }
     .muted{color:var(--muted)}
     .checkbox{
@@ -339,9 +337,23 @@
 
     .weights{
       margin-top:18px;
-      padding:18px;
+      padding:0;
     }
-    .weights h2{margin:0 0 10px 0; font-size:16px}
+    .weightsSummary{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:16px 18px;
+      cursor:pointer;
+      list-style:none;
+      font-size:16px;
+      font-weight:700;
+    }
+    .weightsSummary::-webkit-details-marker{display:none}
+    .weightsBody{
+      padding:0 18px 18px;
+    }
     .weightsGrid{
       display:grid;
       grid-template-columns: 220px 1fr 80px;
@@ -353,6 +365,33 @@
     }
     input[type="range"]{
       width:100%;
+      accent-color:#f97316;
+      background: linear-gradient(90deg, #f59e0b 0%, #f97316 var(--range-fill, 50%), #f3f4f6 var(--range-fill, 50%), #f3f4f6 100%);
+      border-radius: 999px;
+      height:6px;
+      -webkit-appearance:none;
+    }
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background:#f97316;
+      border:2px solid #fff;
+      box-shadow: 0 6px 12px rgba(249,115,22,.35);
+    }
+    input[type="range"]::-moz-range-track{
+      background: linear-gradient(90deg, #f59e0b 0%, #f97316 var(--range-fill, 50%), #f3f4f6 var(--range-fill, 50%), #f3f4f6 100%);
+      border-radius:999px;
+      height:6px;
+    }
+    input[type="range"]::-moz-range-thumb{
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      background:#f97316;
+      border:2px solid #fff;
+      box-shadow: 0 6px 12px rgba(249,115,22,.35);
     }
     .small{
       font-size:12px;
@@ -374,17 +413,20 @@
       padding:10px 12px;
       border-radius:12px;
       border:1px solid rgba(215,229,219,.95);
-      background: rgba(255,255,255,.9);
+      background: var(--field-bg);
       font-family: ui-monospace, monospace;
       font-size:13px;
       color:#0f172a;
     }
     .actionBar{
       display:grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items:flex-end;
-      gap:14px;
+      place-items:center;
       margin:18px 0 8px;
+    }
+    .actionGroup{
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
     .fieldRow{
       display:flex;
@@ -394,6 +436,10 @@
     .fieldRow label{
       margin:0;
       white-space:nowrap;
+    }
+    .fieldRow select{
+      text-align:center;
+      min-width:48px;
     }
     .footerActions{
       display:flex;
@@ -412,10 +458,16 @@
     }
     .logFoot{
       display:grid;
-      grid-template-columns: 74px 150px 1fr 50px;
+      grid-template-columns: 74px 150px 1fr 64px 44px;
       align-items:center;
       gap:10px;
       margin-top:10px;
+    }
+    .logNote{
+      grid-column: 2 / -1;
+      font-size:12px;
+      color: var(--muted);
+      line-height:1.5;
     }
     .btn.compact{
       min-width:auto;
@@ -423,6 +475,9 @@
       font-size:13px;
       border-radius:12px;
       box-shadow:none;
+    }
+    .btn.greenText{
+      color:#0f7a3f;
     }
     .iconBtn{
       border:none;
@@ -436,16 +491,63 @@
       background: rgba(225,29,72,.08);
       color:#be123c;
     }
-    .iconBtn.danger{
-      color:#be123c;
-    }
-    .iconBtn.danger:hover{
-      background: rgba(225,29,72,.12);
-    }
     .trashIcon{
       width:16px;
       height:16px;
       display:block;
+    }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      overflow:hidden;
+      border-radius: 14px;
+      border:1px solid rgba(215,229,219,.95);
+      background: #fff;
+      table-layout: fixed;
+    }
+    tbody tr{
+      background: rgba(242,248,243,.75);
+    }
+    tbody tr:nth-child(even){
+      background: rgba(236,245,238,.95);
+    }
+    .logDeleteHead,
+    .logDeleteCell{
+      width:44px;
+      text-align:center;
+    }
+    .tsCell{
+      vertical-align: middle;
+    }
+    .hitCell{
+      text-align:left;
+      vertical-align: middle;
+      padding-left:10px;
+    }
+    .hitCheck{
+      appearance:none;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      border:1px solid rgba(15,122,63,.25);
+      background: radial-gradient(circle at 35% 35%, rgba(15,122,63,.10), rgba(15,122,63,.02));
+      cursor:pointer;
+      display:block;
+      margin:0;
+    }
+    .hitCheck:checked{
+      background:#16a34a;
+      border-color:#15803d;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.8);
+    }
+    .formulaBox{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(215,229,219,.95);
+      background: var(--field-bg);
+      font-family: ui-monospace, monospace;
+      font-size:13px;
+      color:#0f172a;
     }
   </style>
 </head>
@@ -481,29 +583,38 @@
     </section>
 
     <section class="actionBar">
-      <div class="fieldRow">
-        <label for="ticketsPerDraw">抽選数</label>
-        <select id="ticketsPerDraw"></select>
+      <div class="actionGroup">
+        <div class="fieldRow">
+          <label for="ticketsPerDraw">抽選数</label>
+          <select id="ticketsPerDraw"></select>
+        </div>
+        <button id="drawBtn" class="btn">抽選する！</button>
       </div>
-      <button id="drawBtn" class="btn">抽選する</button>
-      <div aria-hidden="true"></div>
     </section>
 
     <section class="panel log">
       <div class="logHead">
         <div>
-          <h2>これまでの抽選結果</h2>
+          <h2>あなたのこれまでの抽選結果</h2>
         </div>
       </div>
 
       <div class="logScroll">
         <table>
+          <colgroup>
+            <col style="width:74px;">
+            <col style="width:150px;">
+            <col>
+            <col style="width:64px;">
+            <col style="width:44px;">
+          </colgroup>
           <thead>
             <tr>
-              <th style="width:74px;">購入</th>
-              <th style="width:150px;">日時</th>
+              <th>購入</th>
+              <th>日時</th>
               <th>組み合わせ</th>
-              <th style="width:50px;"></th>
+              <th>的中</th>
+              <th class="logDeleteHead"></th>
             </tr>
           </thead>
           <tbody id="logBody">
@@ -513,52 +624,41 @@
       </div>
       <div class="logFoot">
         <div>
-          <button id="clearChecksBtn" class="btn secondary compact" title="購入済みチェックをすべて外します">全解除</button>
+          <button id="clearChecksBtn" class="btn secondary compact greenText" title="購入済みチェックをすべて外します">全解除</button>
         </div>
-        <div></div>
-        <div></div>
-        <div style="text-align:right;">
-          <button id="deleteCheckedBtn" class="iconBtn danger" title="購入済みにチェックした行を削除します" aria-label="チェック行を全削除">
-            <svg class="trashIcon" viewBox="0 0 24 24" aria-hidden="true">
-              <path fill="currentColor" d="M9 3h6l1 2h4v2H4V5h4l1-2Zm1 6h2v9h-2V9Zm4 0h2v9h-2V9ZM6 9h2v9H6V9Zm1 12h10a2 2 0 0 0 2-2V7H5v12a2 2 0 0 0 2 2Z"/>
-            </svg>
-          </button>
+        <div class="logNote">
+          表示は人気番号です。データは端末内に記録されています。馬券購入時は各レースの人気順を参照して、対応する馬番を選択してください。
         </div>
       </div>
-      <p class="small">
-        表示は人気番号です。データは端末内に記録されています。馬券購入時は各レースの人気順を参照して、対応する馬番を選択してください。
-      </p>
-
     </section>
 
-    <section class="panel weights">
-      <h2>重み設定 <span class="pill">基本触らない想定</span></h2>
+    <details class="panel weights">
+      <summary class="weightsSummary">抽選の重み設定 <span class="pill">おすすめ設定</span></summary>
+      <div class="weightsBody">
+        <div class="weightsGrid">
+          <div class="field" style="min-width:220px">
+            <label>計算式</label>
+            <div class="formulaBox">weight(i) = 1 / i^s</div>
+          </div>
 
-      <div class="weightsGrid">
-        <div class="field" style="min-width:220px">
-          <label for="distType">分布タイプ</label>
-          <select id="distType">
-            <option value="power">べき乗</option>
-          </select>
+          <div class="field">
+            <label id="distParamLabel" for="distParam">偏り（s）</label>
+            <input id="distParam" type="range" />
+          </div>
+
+          <div class="field" style="min-width:80px">
+            <label>値</label>
+            <div id="distParamValue" class="paramValue"></div>
+          </div>
         </div>
 
-        <div class="field">
-          <label id="distParamLabel" for="distParam">偏り（λ）</label>
-          <input id="distParam" type="range" />
-        </div>
-
-        <div class="field" style="min-width:80px">
-          <label>値</label>
-          <div id="distParamValue" class="paramValue"></div>
-        </div>
+        <p class="small" id="distHelp"></p>
       </div>
-
-      <p class="small" id="distHelp"></p>
-    </section>
+    </details>
 
     <section class="footerActions">
       <button id="resetBtn" class="btn subtle" title="設定とログを初期化します">初期化</button>
-      <a class="footerLink" href="https://example.com" target="_blank" rel="noopener">勝った一部を作者に寄付する</a>
+      <a class="footerLink" href="https://github.com/sponsors/VarYUvrc" target="_blank" rel="noopener">勝った一部を作者に寄付する</a>
     </section>
   </main>
 
@@ -577,7 +677,7 @@
         distParam: 1.0, // exp: λ, power: s
       },
       lastDrawTickets: [], // [{ranks:[...], tsISO:"..."}]
-      log: [] // newest first: [{id, tsISO, ranks:[5], purchased:boolean}]
+      log: [] // newest first: [{id, tsISO, ranks:[5], purchased:boolean, hit:boolean}]
     };
 
     let state = loadState();
@@ -590,9 +690,7 @@
 
     const logBody = document.getElementById("logBody");
     const clearChecksBtn = document.getElementById("clearChecksBtn");
-    const deleteCheckedBtn = document.getElementById("deleteCheckedBtn");
 
-    const distTypeEl = document.getElementById("distType");
     const distParamEl = document.getElementById("distParam");
     const distParamLabelEl = document.getElementById("distParamLabel");
     const distParamValueEl = document.getElementById("distParamValue");
@@ -679,28 +777,19 @@
     // ---------- 分布設定UI ----------
     function configureDistUIFromState() {
       state.settings.distType = "power";
-      distTypeEl.value = "power";
-      distTypeEl.disabled = true;
       applyDistUIByType("power", state.settings.distParam);
+      updateRangeFill();
     }
 
     function applyDistUIByType(type, param) {
-      if (type === "exp") {
-        distParamLabelEl.textContent = "偏り（λ：指数減衰）";
-        distParamEl.min = "0";
-        distParamEl.max = "1.2";
-        distParamEl.step = "0.05";
-        distParamEl.value = String(clampFloat(param, 0, 1.2));
-        distHelpEl.textContent = "λを上げるほど、上位人気が選ばれやすくなります。";
-      } else {
-        distParamLabelEl.textContent = "偏り（s：べき乗）";
-        distParamEl.min = "0";
-        distParamEl.max = "2.5";
-        distParamEl.step = "0.1";
-        distParamEl.value = String(clampFloat(param, 0, 2.5));
-        distHelpEl.textContent = "sを上げるほど、上位人気が選ばれやすくなります。";
-      }
+      distParamLabelEl.textContent = "偏り（s）";
+      distParamEl.min = "0";
+      distParamEl.max = "2.5";
+      distParamEl.step = "0.1";
+      distParamEl.value = String(clampFloat(param, 0, 2.5));
+      distHelpEl.textContent = "sを上げるほど、上位人気が選ばれやすくなります。";
       distParamValueEl.textContent = formatParam(parseFloat(distParamEl.value));
+      updateRangeFill();
     }
 
     function formatParam(v) {
@@ -708,22 +797,22 @@
       return (Math.round(v * 100) / 100).toFixed(2);
     }
 
-    distTypeEl.addEventListener("change", () => {
-      state.settings.distType = "power";
-      distTypeEl.value = "power";
-      // 切り替え時は現在の値をそのまま流用（範囲外なら丸め）
-      state.settings.distParam = parseFloat(distParamEl.value);
-      applyDistUIByType("power", state.settings.distParam);
-      state.settings.distParam = parseFloat(distParamEl.value);
-      saveState();
-    });
+    function updateRangeFill() {
+      const min = parseFloat(distParamEl.min);
+      const max = parseFloat(distParamEl.max);
+      const value = parseFloat(distParamEl.value);
+      const percent = ((value - min) / (max - min)) * 100;
+      distParamEl.style.setProperty("--range-fill", `${percent}%`);
+    }
 
     distParamEl.addEventListener("input", () => {
       distParamValueEl.textContent = formatParam(parseFloat(distParamEl.value));
+      updateRangeFill();
     });
 
     distParamEl.addEventListener("change", () => {
       state.settings.distParam = parseFloat(distParamEl.value);
+      updateRangeFill();
       saveState();
     });
 
@@ -746,17 +835,20 @@
         tickets.push({ ranks, tsISO });
       }
 
+      const sortedTickets = sortTicketsByRanks(tickets);
+
       // 四角窓に表示
-      state.lastDrawTickets = tickets;
-      renderRaceWindowsFromTickets(tickets);
+      state.lastDrawTickets = sortedTickets;
+      renderRaceWindowsFromTickets(sortedTickets);
 
       // ログに1通りずつ追加（チェックは通りごと）
-      for (let t = 0; t < tickets.length; t++) {
+      for (let t = 0; t < sortedTickets.length; t++) {
         const entry = {
           id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
           tsISO,
-          ranks: tickets[t].ranks,
-          purchased: false
+          ranks: sortedTickets[t].ranks,
+          purchased: false,
+          hit: false
         };
         state.log.unshift(entry);
       }
@@ -786,16 +878,6 @@
       renderLog();
     });
 
-    deleteCheckedBtn.addEventListener("click", () => {
-      const checkedCount = state.log.filter(e => e.purchased).length;
-      if (checkedCount === 0) return;
-      const ok = confirm(`購入済みにチェックした ${checkedCount} 行を削除します。よろしいですか？`);
-      if (!ok) return;
-      state.log = state.log.filter(e => !e.purchased);
-      saveState();
-      renderLog();
-      // lastDrawは触らない（直近表示の視認性を優先）
-    });
 
     // ---------- 描画 ----------
     function renderRaceWindowsFromTickets(tickets) {
@@ -832,7 +914,7 @@
       if (!state.log || state.log.length === 0) {
         const tr = document.createElement("tr");
         const td = document.createElement("td");
-        td.colSpan = 4;
+        td.colSpan = 5;
         td.className = "muted";
         td.textContent = "ログはまだありません。";
         td.style.padding = "14px 10px";
@@ -856,8 +938,22 @@
         });
         tdCheck.appendChild(cb);
 
+        // 的中
+        const tdHit = document.createElement("td");
+        tdHit.className = "hitCell";
+        const hit = document.createElement("input");
+        hit.type = "checkbox";
+        hit.className = "hitCheck";
+        hit.checked = !!entry.hit;
+        hit.addEventListener("change", () => {
+          entry.hit = hit.checked;
+          saveState();
+        });
+        tdHit.appendChild(hit);
+
         // 日時
         const tdTs = document.createElement("td");
+        tdTs.className = "tsCell";
         const tsSpan = document.createElement("div");
         tsSpan.className = "ts";
         tsSpan.textContent = formatTs(entry.tsISO);
@@ -886,7 +982,7 @@
         tdCombo.appendChild(combo);
 
         const tdDelete = document.createElement("td");
-        tdDelete.style.textAlign = "center";
+        tdDelete.className = "logDeleteCell";
         const delBtn = document.createElement("button");
         delBtn.className = "iconBtn";
         delBtn.title = "この行を削除";
@@ -901,6 +997,7 @@
         tr.appendChild(tdCheck);
         tr.appendChild(tdTs);
         tr.appendChild(tdCombo);
+        tr.appendChild(tdHit);
         tr.appendChild(tdDelete);
 
         logBody.appendChild(tr);
@@ -919,6 +1016,19 @@
     }
 
     // ---------- 抽選ロジック ----------
+    function sortTicketsByRanks(tickets) {
+      return tickets
+        .map((t, idx) => ({ ...t, _idx: idx }))
+        .sort((a, b) => {
+          for (let i = 0; i < 5; i++) {
+            const diff = a.ranks[i] - b.ranks[i];
+            if (diff !== 0) return diff;
+          }
+          return a._idx - b._idx;
+        })
+        .map(({ _idx, ...rest }) => rest);
+    }
+
     function weightedSampleRank(N, distType, distParam) {
       if (N <= 1) return 1;
 
@@ -980,7 +1090,8 @@
                 id: (typeof e.id === "string") ? e.id : `${Date.now()}-${Math.random().toString(16).slice(2)}`,
                 tsISO: (typeof e.tsISO === "string") ? e.tsISO : new Date().toISOString(),
                 ranks: e.ranks.map(v => clampInt(parseInt(v,10), 1, 18)),
-                purchased: !!e.purchased
+                purchased: !!e.purchased,
+                hit: !!e.hit
               }))
               .slice(0, MAX_LOG);
           }
